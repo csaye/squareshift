@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float movementForce, jumpForce;
 
-    public float maxVelocity;
+    public float maxVelocity, minVelocity;
 
     [Range(0, 1)] public float friction;
     [Range(0, 1)] public float airResistance;
@@ -18,8 +18,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movement;
 
     private float frictionFactor, airResistanceFactor;
-
-    // private bool leftRight, rightLeft;
 
     void Start()
     {
@@ -36,10 +34,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void FixedUpdate() {
-        
-        // If traveling in correct direction, reset parameter
-        // if (rb.velocity.x > 0) leftRight = false;
-        // if (rb.velocity.x < 0) rightLeft = false;
 
         // Left and right movement using a and d
         if (Input.GetKey("a")) {
@@ -53,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         if ((Input.GetKey("a") == Input.GetKey("d")) || (rb.velocity.x > 0 && Input.GetKey("a") || (rb.velocity.x < 0 && Input.GetKey("d")))) {
 
             // If on ground
-            if (rb.velocity.y == 0) {
+            if (Mathf.Abs(rb.velocity.y) <= minVelocity) {
 
                 // Slow by friction
                 rb.velocity = new Vector2(rb.velocity.x * frictionFactor, rb.velocity.y);
@@ -75,6 +69,6 @@ public class PlayerMovement : MonoBehaviour
     void UpdateMovement() {
 
         // If on ground and space key pressed, jump
-        if (rb.velocity.y == 0 && Input.GetKeyDown("space")) rb.AddForce(new Vector2(0, jumpForce));
+        if (Mathf.Abs(rb.velocity.y) <= minVelocity && Input.GetKeyDown("space")) rb.AddForce(new Vector2(0, jumpForce));
     }
 }
