@@ -8,11 +8,16 @@ public class PlayerShifting : MonoBehaviour
     // The current shift that the player is in
     public static float currentShift = 1;
 
+    // Whether the player is currently shifting
+    public static bool shifting = false;
+
     // The four boxes which make up the player
     public GameObject box1, box2, box3, box4;
 
     // The player camera
     public GameObject playerCamera;
+
+    private GameObject player;
 
     // Vector pos positioning:
     // 0_3
@@ -25,15 +30,21 @@ public class PlayerShifting : MonoBehaviour
     private Vector2 pos0_0 = new Vector2(-1.5f, -0.5f), pos1_0 = new Vector2(-0.5f, -0.5f), pos2_0 = new Vector2(0.5f, -0.5f), pos3_0 = new Vector2(1.5f, -0.5f);
 
     private PlayerCamera playerCameraScript;
+    private PlayerMovement playerMovementScript;
 
     void Start()
     {
+        if (player == null) player = GameObject.FindWithTag("Player");
+
         playerCameraScript = playerCamera.GetComponent<PlayerCamera>();
+        playerMovementScript = player.GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
-        UpdateBoxPosition();
+
+        // If player is on the ground and not currently shifting, check for inputs
+        if (playerMovementScript.grounded() && !shifting) UpdateBoxPosition();
     }
 
     // Checks for the key presses corresponding to the box formations
