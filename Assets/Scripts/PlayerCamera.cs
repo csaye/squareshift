@@ -87,14 +87,12 @@ public class PlayerCamera : MonoBehaviour
             float localX = x + player.transform.position.x;
             float localY = y + player.transform.position.y;
 
-            Debug.Log("moving from position: " + startingPos.y + " to: " + localY);
-
             // Increment to new player position
             float incrementedX = (((Mathf.Abs(i - 100) / 100.0f) * transform.position.x) + ((i / 100.0f) * localX));
             float incrementedY = (((Mathf.Abs(i - 100) / 100.0f) * transform.position.y) + ((i / 100.0f) * localY));
             transform.position = new Vector3(incrementedX, incrementedY, transform.position.z);
 
-            // Wait
+            // Delay camera transition
             yield return new WaitForSeconds(shiftSlowness / 100.0f);
         }
 
