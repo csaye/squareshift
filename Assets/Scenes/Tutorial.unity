@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b4bb8add1d7495b9c85a71d3aec894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraXMin: 0
+  cameraXMin: -1
   cameraXMax: 77.75
 --- !u!61 &378785200
 BoxCollider2D:
@@ -1979,6 +1979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87e53254879c4e8f96c0b2dd014cbc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextScene: Level 1
 --- !u!1 &1099424430
 GameObject:
   m_ObjectHideFlags: 0

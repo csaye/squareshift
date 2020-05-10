@@ -41,14 +41,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         
-        // If the player is not currently shifting
-        if (!PlayerShifting.shifting) UpdateMovement();
+        // If the player is not currently shifting and level not complete
+        if (!PlayerShifting.shifting && !LevelBounds.levelComplete) UpdateMovement();
     }
 
     void FixedUpdate() {
 
-        // If the player is not currently shifting
-        if (!PlayerShifting.shifting) {
+        // If the player is not currently shifting and level not complete
+        if (!PlayerShifting.shifting && !LevelBounds.levelComplete) {
 
             // Left and right movement using a and d
             if (Input.GetKey("a")) {

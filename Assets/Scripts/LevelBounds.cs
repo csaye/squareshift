@@ -15,10 +15,16 @@ public class LevelBounds : MonoBehaviour
     public float cameraXMin;
     public float cameraXMax;
 
+    // The collider in which the player can trigger the end level sequence
     private Collider2D endTrigger;
 
     void Start()
     {
+
+        // Reset level complete
+        levelComplete = false;
+
+        // Set the screen bounds to the set camera bounds
         screenXMin = cameraXMin;
         screenXMax = cameraXMax;
 
@@ -37,6 +43,6 @@ public class LevelBounds : MonoBehaviour
 
     // Trigger end level sequence
     void EndLevel() {
-        Debug.Log("ending level");
+        levelComplete = true;
     }
 }
