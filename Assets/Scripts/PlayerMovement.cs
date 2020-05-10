@@ -24,8 +24,10 @@ public class PlayerMovement : MonoBehaviour
     private float frictionFactor, airResistanceFactor;
 
     // Allows for early space bar presses to trigger jumps
-    private bool jumpLate = false;
-    private float jumpDelay, jumpDelayDefault = 20;
+    private float spaceDelay, spaceDelayDefault = 20;
+
+    // Alows for late space bar presses to trigger jumps
+    private float groundDelay, groundDelayDefault = 10;
 
     void Start()
     {
@@ -87,16 +89,32 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateMovement() {
 
-        // If the space bar is pressed, reset the jump delay
-        if (Input.GetKeyDown("space")) jumpDelay = jumpDelayDefault;
+        // If the space bar is pressed, reset the space bar delay
+        if (Input.GetKeyDown("space")) spaceDelay = spaceDelayDefault;
 
-        // If on ground and space key pressed, jump
-        if (grounded() && Input.GetKeyDown("space")) rb.AddForce(new Vector2(0, jumpForce));
+        // If grounded, reset the grounded delay
+        if (grounded()) groundDelay = groundDelayDefault;
 
-        // If space key released while jumping, kill upward velocity
-        if (!grounded() && Input.GetKeyUp("space")) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpKill);
+        // If on ground or recently on ground
+        if (groundDelay > 0)
+        
+            // If space bar recently pressed and still pressed, jump
+            if (spaceDelay > 0 && Input.GetKey("space")) {
+                spaceDelay = 0;
+                rb.AddForce(new Vector2(0, jumpForce));
+            }
 
-        if (jumpDelay > 0) jumpDelay--;
+            // If space bar pressed, jump
+            else if (Input.GetKeyDown("space")) {
+                rb.AddForce(new Vector2(0, jumpForce));
+            }
+
+        // If space key released while jumping up, kill upward velocity
+        if (!grounded() && Input.GetKeyUp("space") && rb.velocity.y > 0) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpKill);
+
+        // Decrement the space and ground delays
+        if (spaceDelay > 0) spaceDelay--;
+        if (groundDelay > 0) groundDelay--;
     }
 
     // Whether the player is currently grounded

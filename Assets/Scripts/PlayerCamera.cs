@@ -31,14 +31,24 @@ public class PlayerCamera : MonoBehaviour
         // Update the center position of the player
         UpdatePlayerCenter();
 
-        // Move to player position
         // If camera position does not exceed bounds
-        if (PlayerMovement.playerCenter.x < LevelEnd.screenXMax) {
+        if (PlayerMovement.playerCenter.x > LevelBounds.screenXMin && PlayerMovement.playerCenter.x < LevelBounds.screenXMax) {
+
+            // Move to player position
             transform.position = new Vector3(PlayerMovement.playerCenter.x, PlayerMovement.playerCenter.y, transform.position.z);
         
-        // If camera position exceeds bounds
-        } else {
-            transform.position = new Vector3(LevelEnd.screenXMax, PlayerMovement.playerCenter.y, transform.position.z);
+        // If camera position exceeds minimum bounds
+        } else if (PlayerMovement.playerCenter.x < LevelBounds.screenXMin) {
+
+            // Move to minimum bounds
+            transform.position = new Vector3(LevelBounds.screenXMin, PlayerMovement.playerCenter.y, transform.position.z);
+
+        // If camera position exceeds maximum bounds
+        } else if (PlayerMovement.playerCenter.x > LevelBounds.screenXMax) {
+
+            // Move to maximum bounds
+            transform.position = new Vector3(LevelBounds.screenXMax, PlayerMovement.playerCenter.y, transform.position.z);
+
         }
     }
 
@@ -104,12 +114,22 @@ public class PlayerCamera : MonoBehaviour
             float incrementedY = (((Mathf.Abs(i - 100) / 100.0f) * transform.position.y) + ((i / 100.0f) * localY));
             
             // If camera position does not exceed bounds
-            if (incrementedX < LevelEnd.screenXMax) {
+            if (incrementedX > LevelBounds.screenXMin && incrementedX < LevelBounds.screenXMax) {
+
+                // Move to player position
                 transform.position = new Vector3(incrementedX, incrementedY, transform.position.z);
             
-            // If camera position exceed bounds
-            } else {
-                transform.position = new Vector3(LevelEnd.screenXMax, incrementedY, transform.position.z);
+            // If camera position exceeds minimum bounds
+            } else if (incrementedX < LevelBounds.screenXMin) {
+
+                // Move to minimum bounds
+                transform.position = new Vector3(LevelBounds.screenXMin, incrementedY, transform.position.z);
+            
+            // If camera position exceeds maximum bounds
+            } else if (incrementedX > LevelBounds.screenXMax) {
+
+                // Move to maximum bounds
+                transform.position = new Vector3(LevelBounds.screenXMax, incrementedY, transform.position.z);
             }
 
             // Delay camera transition
