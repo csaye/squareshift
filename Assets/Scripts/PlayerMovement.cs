@@ -5,11 +5,15 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
+    public static Vector2 playerCenter;
+
     public Rigidbody2D rb;
 
     public float movementForce, jumpForce;
 
     public float maxVelocity, minVelocity;
+
+    [Range(0, 1)] public float jumpKill;
 
     [Range(0, 1)] public float friction;
     [Range(0, 1)] public float airResistance;
@@ -18,6 +22,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movement;
 
     private float frictionFactor, airResistanceFactor;
+
+    // Allows for early space bar presses to trigger jumps
+    private bool jumpLate = false;
+    private float jumpDelay, jumpDelayDefault = 20;
 
     void Start()
     {
@@ -79,8 +87,16 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateMovement() {
 
+        // If the space bar is pressed, reset the jump delay
+        if (Input.GetKeyDown("space")) jumpDelay = jumpDelayDefault;
+
         // If on ground and space key pressed, jump
         if (grounded() && Input.GetKeyDown("space")) rb.AddForce(new Vector2(0, jumpForce));
+
+        // If space key released while jumping, kill upward velocity
+        if (!grounded() && Input.GetKeyUp("space")) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpKill);
+
+        if (jumpDelay > 0) jumpDelay--;
     }
 
     // Whether the player is currently grounded
