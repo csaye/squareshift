@@ -17,6 +17,10 @@ public class PlayerShifting : MonoBehaviour
     // The player camera
     public GameObject playerCamera;
 
+    // The list of all restricted backgrounds
+    private GameObject[] restrictedBackgrounds;
+
+    // The player
     private GameObject player;
 
     // Vector pos positioning:
@@ -36,6 +40,8 @@ public class PlayerShifting : MonoBehaviour
     {
         if (player == null) player = GameObject.FindWithTag("Player");
 
+        if (restrictedBackgrounds == null) restrictedBackgrounds = GameObject.FindGameObjectsWithTag("Background Restrictive");
+
         playerCameraScript = playerCamera.GetComponent<PlayerCamera>();
         playerMovementScript = player.GetComponent<PlayerMovement>();
     }
@@ -43,8 +49,8 @@ public class PlayerShifting : MonoBehaviour
     void Update()
     {
 
-        // If player is on the ground and not currently shifting, check for inputs
-        if (playerMovementScript.grounded() && !shifting) UpdateBoxPosition();
+        // If player is on the ground and not currently shifting or restricted, check for inputs
+        if (playerMovementScript.grounded() && !shifting && !restricted()) UpdateBoxPosition();
     }
 
     // Checks for the key presses corresponding to the box formations
@@ -105,5 +111,22 @@ public class PlayerShifting : MonoBehaviour
 
         // If no positions were found to have interference, return true;
         return false;
+    }
+
+    // Whether the player center is currently in a restricted area
+    bool restricted() {
+
+        // Reset parameter
+        bool restricted = false;
+
+        // Check each restricted background
+        foreach(GameObject background in restrictedBackgrounds) {
+
+            // If the restricted background contains the player center
+            if (background.GetComponent<Collider2D>().bounds.Contains(PlayerMovement.playerCenter)) restricted = true;
+        }
+
+        // Set restricted
+        return restricted;
     }
 }
