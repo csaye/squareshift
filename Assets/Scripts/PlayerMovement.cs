@@ -5,7 +5,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
+    // The center of the player collider
     public static Vector2 playerCenter;
+
+    // Whether the player has been killed or not
+    public static bool killed = false;
 
     public Rigidbody2D rb;
 
@@ -40,15 +44,21 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
+        // If the player is killed or level is complete, stop all movement
+        if (killed || LevelBounds.levelComplete) {
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
+        }
         
-        // If the player is not currently shifting and level not complete
-        if (!PlayerShifting.shifting && !LevelBounds.levelComplete) UpdateMovement();
+        // If the player is not currently shifting
+        if (!PlayerShifting.shifting) UpdateMovement();
     }
 
     void FixedUpdate() {
 
-        // If the player is not currently shifting and level not complete
-        if (!PlayerShifting.shifting && !LevelBounds.levelComplete) {
+        // If the player is not currently shifting
+        if (!PlayerShifting.shifting) {
 
             // Left and right movement using a and d
             if (Input.GetKey("a")) {

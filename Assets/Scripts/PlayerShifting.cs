@@ -49,16 +49,16 @@ public class PlayerShifting : MonoBehaviour
 
     // Checks for the key presses corresponding to the box formations
     void UpdateBoxPosition() {
-        if (Input.GetKeyDown("1")) SetBoxPosition(1, pos0_0, pos1_0, pos0_1, pos1_1);
-        if (Input.GetKeyDown("2")) SetBoxPosition(2, pos0_0, pos1_1, pos0_1, pos1_2);
-        if (Input.GetKeyDown("3")) SetBoxPosition(3, pos0_0, pos1_0, pos1_1, pos2_1);
-        if (Input.GetKeyDown("4")) SetBoxPosition(4, pos0_0, pos0_1, pos0_2, pos1_2);
-        if (Input.GetKeyDown("5")) SetBoxPosition(5, pos1_0, pos0_1, pos1_1, pos0_2);
-        if (Input.GetKeyDown("6")) SetBoxPosition(6, pos2_0, pos1_0, pos1_1, pos0_1);
-        if (Input.GetKeyDown("7")) SetBoxPosition(7, pos1_0, pos1_1, pos1_2, pos0_2);
-        if (Input.GetKeyDown("8")) SetBoxPosition(8, pos1_0, pos0_1, pos1_1, pos2_1);
-        if (Input.GetKeyDown("9")) SetBoxPosition(9, pos0_0, pos0_1, pos0_2, pos0_3);
-        if (Input.GetKeyDown("0")) SetBoxPosition(0, pos0_0, pos1_0, pos2_0, pos3_0);
+        if (Input.GetKeyDown("1") && currentShift != 1) SetBoxPosition(1, pos0_0, pos1_0, pos0_1, pos1_1);
+        if (Input.GetKeyDown("2") && currentShift != 2) SetBoxPosition(2, pos0_0, pos1_1, pos0_1, pos1_2);
+        if (Input.GetKeyDown("3") && currentShift != 3) SetBoxPosition(3, pos0_0, pos1_0, pos1_1, pos2_1);
+        if (Input.GetKeyDown("4") && currentShift != 4) SetBoxPosition(4, pos0_0, pos0_1, pos0_2, pos1_2);
+        if (Input.GetKeyDown("5") && currentShift != 5) SetBoxPosition(5, pos1_0, pos0_1, pos1_1, pos0_2);
+        if (Input.GetKeyDown("6") && currentShift != 6) SetBoxPosition(6, pos2_0, pos1_0, pos1_1, pos0_1);
+        if (Input.GetKeyDown("7") && currentShift != 7) SetBoxPosition(7, pos1_0, pos1_1, pos1_2, pos0_2);
+        if (Input.GetKeyDown("8") && currentShift != 8) SetBoxPosition(8, pos1_0, pos0_1, pos1_1, pos2_1);
+        if (Input.GetKeyDown("9") && currentShift != 9) SetBoxPosition(9, pos0_0, pos0_1, pos0_2, pos0_3);
+        if (Input.GetKeyDown("0") && currentShift != 0) SetBoxPosition(0, pos0_0, pos1_0, pos2_0, pos3_0);
     }
 
     // Sets the box positions to the desired formation

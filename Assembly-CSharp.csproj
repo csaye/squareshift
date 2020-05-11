@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\PlayerCamera.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\PlayerShifting.cs" />
+     <Compile Include="Assets\Scripts\Spike.cs" />
      <Compile Include="Assets\Scripts\TextController.cs" />
      <None Include="Assets\Text\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Text\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
